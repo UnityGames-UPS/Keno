@@ -132,6 +132,9 @@ public class KenoBehaviour : MonoBehaviour
     // Debug.Log($"Starting Keno Game with {SelectedList.Count} selections.");
     IsKenoComplete = false;
 
+    uiManager.PayoutHighlight.GetComponent<RectTransform>().anchoredPosition = uiManager.initialPayoutHighlightPosi;
+    uiManager.PayoutHighlight.SetActive(true);
+
     if (socketIOManager)
     {
       socketIOManager.isResultdone = false;
@@ -145,19 +148,26 @@ public class KenoBehaviour : MonoBehaviour
     for (int i = 0; i < ResultList.Count; i++)
     {
       audioController.PlayKenoAudio(3);
+      if (Balls_Text)
+      {
+        Balls_Text.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, Random.Range(-7f, 7f));
+      }
       if (Balls_Text) Balls_Text.text = ResultList[i].ToString();
       if (MainNumber_Text) MainNumber_Text.text = (i + 1).ToString();
 
-      Ball_Transform.localScale = Vector3.zero;
       if (uiManager.turboSpin)
       {
-        Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
-        yield return new WaitForSeconds(0.4f);
+        // Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(0.3f);
       }
       else
       {
+        Ball_Transform.localScale = Vector3.zero;
         Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
+        RectTransform rt = Ball_Transform as RectTransform;
+        rt.DOShakeAnchorPos(0.3f, new Vector2(6f, 0f), 50, 0, false, true);
+        yield return new WaitForSeconds(0.5f);
       }
 
       KenoButtonScripts[ResultList[i] - 1].ResultColor();
@@ -166,17 +176,18 @@ public class KenoBehaviour : MonoBehaviour
     CheckPopup = true;
 
     uiManager.CheckFinalWinning();
-    
+
     uiManager.EnableReset();
-    
+
     if (DisableScreen_object) DisableScreen_object.SetActive(false);
     yield return new WaitUntil(() => !CheckPopup);
     uiManager.BalanceAmt_Text.text = socketIOManager.playerdata.balance.ToString("F2");
 
     yield return new WaitForSeconds(0.5f);
     IsKenoComplete = true;
-    uiManager.turboSpin = false;
     uiManager.GameButtonToggle(true);
+    uiManager.turboSpin = false;
+    uiManager.Turbo_Text.text = "TURBO<br>IS<br>OFF";
     audioController.StopMainAudio();
   }
 
@@ -196,6 +207,7 @@ public class KenoBehaviour : MonoBehaviour
     }
 
     if (MainNumber_Text) MainNumber_Text.text = "00";
+    if (Balls_Text) Balls_Text.text = "";
   }
 
   internal void CleanPage()
@@ -205,6 +217,8 @@ public class KenoBehaviour : MonoBehaviour
       KenoButtonScripts[i].ResetButton();
     }
     if (MainNumber_Text) MainNumber_Text.text = "00";
+    uiManager.PayoutHighlight.SetActive(false);
+    uiManager.ClearBlackImage.SetActive(true);
     SelectedList.Clear();
     SelectedList.TrimExcess();
     ResultCounter = 0;

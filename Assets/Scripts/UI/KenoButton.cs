@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using Best.HTTP.SecureProtocol.Org.BouncyCastle.Security;
+using DG.Tweening;
 
 public class KenoButton : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class KenoButton : MonoBehaviour
   private KenoBehaviour KenoManager;
 
   internal bool isActive = false;
+
+  [SerializeField] private UIManager uIManager;
   [SerializeField] private AudioController audioController;
 
   private void Start()
@@ -43,6 +47,7 @@ public class KenoButton : MonoBehaviour
   {
     audioController.PlayKenoAudio(0);
     isActive = !isActive;
+    uIManager.PayoutHighlight.SetActive(false);
     if (isActive)
     {
       if (KenoManager.selectionCounter < 15)
@@ -81,6 +86,7 @@ public class KenoButton : MonoBehaviour
       Black_Text.gameObject.SetActive(true);
       Normal_Text.gameObject.SetActive(false);
       KenoManager.ResultCounter++;
+      uIManager.HighlightPayout(KenoManager.ResultCounter);
     }
   }
 

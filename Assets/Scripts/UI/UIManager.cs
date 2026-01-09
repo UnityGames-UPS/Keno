@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] internal GameObject ClearBlackImage;
 
   [Header("Texts")]
-  [SerializeField] private TMP_Text Turbo_Text;
+  [SerializeField] internal TMP_Text Turbo_Text;
   [SerializeField] private TMP_Text PopupWin_Text;
   [SerializeField] private TMP_Text Win_Text;
   [SerializeField] private TMP_Text TotalBet_text;
@@ -48,11 +48,13 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text PayoutInitialText;
 
   [Header("Lists")]
+  [SerializeField] internal List<RectTransform> HighlightTransform;
   [SerializeField] private List<TMP_Text> Payout_Text;
   [SerializeField] private List<TMP_Text> Hits_Text;
   [SerializeField] private List<Button> RND_NumberButtons;
 
   [Header("GameObjects")]
+  [SerializeField] internal GameObject PayoutHighlight;
   [SerializeField] private GameObject Reset_Object;
 
   [Header("Scripts")]
@@ -81,7 +83,7 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   private GameObject ReconnectPopup_Object;
 
-
+  internal Vector2 initialPayoutHighlightPosi;
   internal bool isReset = false;
   internal bool turboSpin = false;
   internal bool IsQuitSelf = false;
@@ -149,6 +151,9 @@ public class UIManager : MonoBehaviour
     CloseDisconnect_Button.onClick.AddListener(delegate { StartCoroutine(socketManager.CloseSocket()); });
 
     RNDNumberButtons();
+
+    initialPayoutHighlightPosi = PayoutHighlight.GetComponent<RectTransform>().anchoredPosition;
+
   }
 
   private void PlayKeeno()
@@ -217,6 +222,7 @@ public class UIManager : MonoBehaviour
   {
     UpdateSelectedText();
     ClearBlackImage.SetActive(true);
+    PayoutHighlight.SetActive(false);
     Clear_Button.interactable = false;
     BalanceAmt_Text.text = socketManager.playerdata.balance.ToString("F2");
     if (TotalBet_text) TotalBet_text.text = socketManager.initialData.bets[KenoManager.betCounter].ToString();
@@ -316,7 +322,6 @@ public class UIManager : MonoBehaviour
     else
     {
       KenoManager.CheckPopup = false;
-
     }
   }
 
@@ -327,7 +332,6 @@ public class UIManager : MonoBehaviour
 
   void BetAmountUpdate()
   {
-
     for (int i = 0; i < Payout_Text.Count; i++)
     {
       if (Payout_Text[i]) Payout_Text[i].text = string.Empty;
@@ -363,6 +367,18 @@ public class UIManager : MonoBehaviour
         if (Payout_Text[i + 1]) Payout_Text[i + 1].text = (socketManager.initialData.paytable[KenoManager.selectionCounter - 1][i] * socketManager.initialData.bets[KenoManager.betCounter]).ToString("F2");
       }
     }
+  }
+
+  internal void HighlightPayout(int hits)
+  {
+    RectTransform highlightRect = PayoutHighlight.GetComponent<RectTransform>();
+    RectTransform targetRect = HighlightTransform[hits];
+
+    // Move using anchored position
+    Vector2 targetPos = targetRect.anchoredPosition;
+
+    highlightRect.DOKill();
+    highlightRect.DOAnchorPos(targetPos, 0.6f).SetEase(Ease.OutQuad);
   }
 
   internal void EnableReset()
@@ -467,10 +483,19 @@ public class UIManager : MonoBehaviour
     if (RNDPanel.activeSelf)
     {
       RNDPanel.SetActive(false);
+      if (KenoManager.selectionCounter > 0)
+      {
+        ClearBlackImage.SetActive(false);
+      }
+      BetUpBlackImage.SetActive(false);
+      BetDownBlackImage.SetActive(false);
     }
     else
     {
       RNDPanel.SetActive(true);
+      ClearBlackImage.SetActive(true);
+      BetUpBlackImage.SetActive(true);
+      BetDownBlackImage.SetActive(true);
     }
   }
 
