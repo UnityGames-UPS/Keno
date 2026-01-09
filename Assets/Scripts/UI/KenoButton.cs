@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class KenoButton : MonoBehaviour
 {
   [SerializeField]
   private Button This_Button;
   [SerializeField]
-  private TMP_Text This_Text;
+  private TMP_Text Normal_Text;
+  [SerializeField]
+  private TMP_Text Black_Text;
   [SerializeField]
   private Image This_Image;
   [SerializeField]
-  private Sprite Pink_Sprite;
+  private Sprite Black_Sprite;
   [SerializeField]
-  private Sprite Purple_Sprite;
+  private Sprite Blue_Sprite;
   [SerializeField]
   private Sprite Red_Sprite;
   [SerializeField]
@@ -28,30 +31,27 @@ public class KenoButton : MonoBehaviour
   {
     This_Button = this.gameObject.GetComponent<Button>();
     This_Image = this.gameObject.GetComponent<Image>();
-    if (this.transform.GetChild(0).GetComponent<TMP_Text>() == null)
-    {
-      This_Text = this.transform.GetChild(1).GetComponent<TMP_Text>();
-    }
-    else
-    {
-      This_Text = this.transform.GetChild(0).GetComponent<TMP_Text>();
-    }
+    Normal_Text = this.transform.GetChild(0).GetComponent<TMP_Text>();
+    Black_Text = this.transform.GetChild(1).GetComponent<TMP_Text>();
+    Black_Text.color = Color.black;
+    Black_Text.gameObject.SetActive(false);
     if (This_Button) This_Button.onClick.RemoveAllListeners();
     if (This_Button) This_Button.onClick.AddListener(OnKenoSelect);
   }
 
   internal void OnKenoSelect()
   {
-    audioController.PlayKenoAudio(3);
+    audioController.PlayKenoAudio(0);
     isActive = !isActive;
     if (isActive)
     {
-      if (KenoManager.selectionCounter < 10)
+      if (KenoManager.selectionCounter < 15)
       {
-        if (This_Image) This_Image.sprite = Pink_Sprite;
-        //if (This_Image) This_Image.color = _selectedColor;
+        if (This_Image) This_Image.sprite = Blue_Sprite;
+        Black_Text.gameObject.SetActive(true);
+        Normal_Text.gameObject.SetActive(false);
         KenoManager.selectionCounter++;
-        KenoManager.AddKeno(int.Parse(This_Text.text));
+        KenoManager.AddKeno(int.Parse(Black_Text.text));
       }
       else
       {
@@ -61,30 +61,35 @@ public class KenoButton : MonoBehaviour
     }
     else
     {
-      if (This_Image) This_Image.sprite = Purple_Sprite;
-      //if (This_Image) This_Image.color = _normalColor;
+      if (This_Image) This_Image.sprite = Black_Sprite;
+      Normal_Text.gameObject.SetActive(true);
+      Black_Text.gameObject.SetActive(false);
       KenoManager.selectionCounter--;
-      KenoManager.RemoveKeno(int.Parse(This_Text.text));
+      KenoManager.RemoveKeno(int.Parse(Normal_Text.text));
     }
   }
 
   internal void ResultColor()
   {
-    if (This_Image) This_Image.sprite = Yellow_Sprite;
-    //if (This_Image) This_Image.color = _resultColor;
+    if (This_Image) This_Image.sprite = Red_Sprite;
+    Black_Text.gameObject.SetActive(true);
+    Normal_Text.gameObject.SetActive(false);
     if (isActive)
     {
-      if (This_Image) This_Image.sprite = Red_Sprite;
-      //enableWinTick();
+      audioController.PlayKenoAudio(4);
+      if (This_Image) This_Image.sprite = Yellow_Sprite;
+      Black_Text.gameObject.SetActive(true);
+      Normal_Text.gameObject.SetActive(false);
       KenoManager.ResultCounter++;
-      KenoManager.CheckTransform(this.transform);
     }
   }
 
   internal void ResetButton()
   {
     isActive = false;
-    if (This_Image) This_Image.sprite = Purple_Sprite;
+    if (This_Image) This_Image.sprite = Black_Sprite;
+    Normal_Text.gameObject.SetActive(true);
+    Black_Text.gameObject.SetActive(false);
   }
 
 }

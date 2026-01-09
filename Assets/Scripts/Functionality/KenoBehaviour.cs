@@ -10,40 +10,32 @@ public class KenoBehaviour : MonoBehaviour
   [SerializeField] private List<KenoButton> KenoButtonScripts;
   [SerializeField] private List<int> SelectedList;
   [SerializeField] private List<int> ResultList;
-  [SerializeField] private List<Transform> Balls_Transform;
-  [SerializeField] private List<TMP_Text> Balls_Text;
+  [SerializeField] private Transform Ball_Transform;
+  [SerializeField] private TMP_Text Balls_Text;
 
   [Header("Integers")]
   [SerializeField] internal int selectionCounter = 0;
   [SerializeField] internal int ResultCounter = 0;
-
-  [Header("Vectors")]
-  [SerializeField] private Vector2 initialPosition;
-  [SerializeField] private int middlePosition;
-  [SerializeField] private int finalPosition;
 
   [Header("Scripts")]
   [SerializeField] private SocketIOManager socketIOManager;
   [SerializeField] private UIManager uiManager;
 
   [Header("Text")]
-  [SerializeField] private TMP_Text MainNumber_Text;
+  [SerializeField] internal TMP_Text MainNumber_Text;
 
   [Header("GameObject")]
   [SerializeField] private GameObject DisableScreen_object;
-  [SerializeField] private List<Transform> Win_Transform;
-  [SerializeField] private List<Transform> TempWin_Transform;
   private List<int> templist = new List<int>();
 
-  internal int betCounter = 0;
+  internal int betCounter = 1;
 
   internal bool IsKenoComplete = false;
   internal bool CheckPopup = false;
 
   [SerializeField] AudioController audioController;
 
-
-  internal void PickRandoms()
+  internal void PickRandoms(int num)
   {
     SelectedList.Clear();
     SelectedList.TrimExcess();
@@ -54,38 +46,12 @@ public class KenoBehaviour : MonoBehaviour
 
     templist.Clear();
     templist.TrimExcess();
-    templist = GenerateRandomNumbers(selectionCounter, 0, 79);
+    templist = GenerateRandomNumbers(num, 0, 79);
     selectionCounter = 0;
 
     for (int i = 0; i < templist.Count; i++)
     {
       KenoButtonScripts[templist[i]].OnKenoSelect();
-    }
-  }
-
-  internal void CheckTransform(Transform thisObject)
-  {
-    if (thisObject.childCount <= 1)
-    {
-      TempWin_Transform[TempWin_Transform.Count - 1].SetParent(thisObject);
-      TempWin_Transform[TempWin_Transform.Count - 1].localPosition = new Vector2(2.6f, 0);
-      TempWin_Transform[TempWin_Transform.Count - 1].SetAsFirstSibling();
-      TempWin_Transform[TempWin_Transform.Count - 1].gameObject.SetActive(true);
-      TempWin_Transform.RemoveAt(TempWin_Transform.Count - 1);
-    }
-    else
-    {
-      Transform temp = null;
-      foreach (Transform t in TempWin_Transform)
-      {
-        if (t == thisObject.GetChild(0))
-        {
-          temp = t;
-          break;
-        }
-      }
-      TempWin_Transform.Remove(temp);
-      thisObject.GetChild(0).gameObject.SetActive(true);
     }
   }
 
@@ -113,16 +79,17 @@ public class KenoBehaviour : MonoBehaviour
       SelectedList.Add(value);
     }
 
-    if (selectionCounter >= 2)
+    if (selectionCounter >= 1)
     {
       uiManager.CheckPlayButton(true);
-      uiManager.SelectionIndicatorObject.SetActive(false);
-
+      uiManager.ClearBlackImage.SetActive(false);
+      uiManager.Clear_Button.interactable = true;
     }
     else
     {
       uiManager.CheckPlayButton(false);
-      uiManager.SelectionIndicatorObject.SetActive(true);
+      uiManager.ClearBlackImage.SetActive(true);
+      uiManager.Clear_Button.interactable = false;
     }
     uiManager.UpdateSelectedText();
   }
@@ -130,16 +97,17 @@ public class KenoBehaviour : MonoBehaviour
   internal void RemoveKeno(int value)
   {
     SelectedList.Remove(value);
-    if (selectionCounter >= 2)
+    if (selectionCounter >= 1)
     {
       uiManager.CheckPlayButton(true);
-      uiManager.SelectionIndicatorObject.SetActive(false);
-
+      uiManager.ClearBlackImage.SetActive(false);
+      uiManager.Clear_Button.interactable = true;
     }
     else
     {
       uiManager.CheckPlayButton(false);
-      uiManager.SelectionIndicatorObject.SetActive(true);
+      uiManager.ClearBlackImage.SetActive(true);
+      uiManager.Clear_Button.interactable = false;
     }
     uiManager.UpdateSelectedText();
   }
@@ -151,9 +119,6 @@ public class KenoBehaviour : MonoBehaviour
 
   internal void PlayKeeno()
   {
-    TempWin_Transform.Clear();
-    TempWin_Transform.TrimExcess();
-    TempWin_Transform.AddRange(Win_Transform);
     if (DisableScreen_object) DisableScreen_object.SetActive(true);
     ResultList.Clear();
     ResultList.TrimExcess();
@@ -163,15 +128,9 @@ public class KenoBehaviour : MonoBehaviour
 
   private IEnumerator PlayGameRoutine()
   {
-    // if (socketIOManager.playerdata.balance < socketIOManager.initialData.bets[betCounter])
-    // {
-    //   uiManager.LowBalancePopupEnable();
-    //   yield break;
-    // }
-    Debug.Log($"Starting Keno Game with {SelectedList.Count} selections.");
-    // uiManager.BalanceAmt_Text.text = socketIOManager.playerdata.balance.ToString("F2");
+
+    // Debug.Log($"Starting Keno Game with {SelectedList.Count} selections.");
     IsKenoComplete = false;
-    audioController.PlayMainAudio(1);
 
     if (socketIOManager)
     {
@@ -183,18 +142,23 @@ public class KenoBehaviour : MonoBehaviour
 
     ResultList = socketIOManager.resultData.drawn;
 
-    for (int i = 0; i < Balls_Transform.Count; i++)
+    for (int i = 0; i < ResultList.Count; i++)
     {
-      audioController.PlayKenoAudio(4);
-      if (MainNumber_Text) MainNumber_Text.text = ResultList[i].ToString();
-      if (Balls_Text[i]) Balls_Text[i].text = ResultList[i].ToString();
-      if (Balls_Transform[i]) Balls_Transform[i].DOLocalMoveY(middlePosition, 0.2f);
-      yield return new WaitForSeconds(0.2f);
-      if (Balls_Transform[i]) Balls_Transform[i].DOLocalMoveX((finalPosition - (i * 55)), 0.5f);
+      audioController.PlayKenoAudio(3);
+      if (Balls_Text) Balls_Text.text = ResultList[i].ToString();
+      if (MainNumber_Text) MainNumber_Text.text = (i + 1).ToString();
 
-      // Debug.Log("At Loop Index : " + i);
-      // Debug.Log("Result Number : " + ResultList[i]);
-      // Debug.Log("Button Used : " + KenoButtonScripts[ResultList[i] - 1].gameObject.name);
+      Ball_Transform.localScale = Vector3.zero;
+      if (uiManager.turboSpin)
+      {
+        Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(0.4f);
+      }
+      else
+      {
+        Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(1f);
+      }
 
       KenoButtonScripts[ResultList[i] - 1].ResultColor();
       yield return new WaitForSeconds(0.1f);
@@ -202,19 +166,17 @@ public class KenoBehaviour : MonoBehaviour
     CheckPopup = true;
 
     uiManager.CheckFinalWinning();
-    if (!uiManager.IsAutoPlay)
-    {
-      uiManager.EnableReset();
-    }
+    
+    uiManager.EnableReset();
+    
     if (DisableScreen_object) DisableScreen_object.SetActive(false);
     yield return new WaitUntil(() => !CheckPopup);
-    //  uiManager.BalanceAmt_Text.text = socketIOManager.playerdata.balance.ToString("F2");
     uiManager.BalanceAmt_Text.text = socketIOManager.playerdata.balance.ToString("F2");
-    if (uiManager.IsAutoPlay) yield return new WaitForSeconds(1f);
-
 
     yield return new WaitForSeconds(0.5f);
     IsKenoComplete = true;
+    uiManager.turboSpin = false;
+    uiManager.GameButtonToggle(true);
     audioController.StopMainAudio();
   }
 
@@ -233,21 +195,7 @@ public class KenoBehaviour : MonoBehaviour
       KenoButtonScripts[SelectedList[i] - 1].OnKenoSelect();
     }
 
-    foreach (Transform ts in Balls_Transform)
-    {
-      ts.localPosition = initialPosition;
-    }
     if (MainNumber_Text) MainNumber_Text.text = "00";
-  }
-
-  internal void ResetWinAnim()
-  {
-    foreach (Transform t in Win_Transform)
-    {
-      t.gameObject.SetActive(false);
-    }
-    TempWin_Transform.Clear();
-    TempWin_Transform.TrimExcess();
   }
 
   internal void CleanPage()
@@ -256,7 +204,7 @@ public class KenoBehaviour : MonoBehaviour
     {
       KenoButtonScripts[i].ResetButton();
     }
-
+    if (MainNumber_Text) MainNumber_Text.text = "00";
     SelectedList.Clear();
     SelectedList.TrimExcess();
     ResultCounter = 0;

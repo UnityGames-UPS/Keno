@@ -1,0 +1,323 @@
+fileFormatVersion: 2
+guid: 53f04ff113cf9499685f4484b4282b80
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_0
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 75
+        width: 582
+        height: 930
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a32cb551b7d184b71a59350b73c20644
+      internalID: -1469294605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_7
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 0
+        width: 248
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e5d3ba7063be471882156690c2b324a
+      internalID: 264589293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_12
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 947
+        width: 116
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 139913a702b5b4c5dbee7016ad40862e
+      internalID: 557371886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_13
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 946
+        width: 116
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a2090e3b1646480f8797e7820403f67
+      internalID: 1774508082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_14
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 946
+        width: 117
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fcbbe5b55eb647b480494795266b7c9
+      internalID: -1505636982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_15
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 947
+        width: 116
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c2757f957f304a08bb17fe6e9851450
+      internalID: 1856216754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: realisticGames_kenoBlue_frames_buttons_30
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 142
+        width: 289
+        height: 693
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3424c4ce454f49fe84307eef4a0f77a
+      internalID: -1012902546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      realisticGames_kenoBlue_frames_buttons_0: -1469294605
+      realisticGames_kenoBlue_frames_buttons_1: -811820427
+      realisticGames_kenoBlue_frames_buttons_10: 334239249
+      realisticGames_kenoBlue_frames_buttons_11: 176792153
+      realisticGames_kenoBlue_frames_buttons_12: 557371886
+      realisticGames_kenoBlue_frames_buttons_13: 1774508082
+      realisticGames_kenoBlue_frames_buttons_14: -1505636982
+      realisticGames_kenoBlue_frames_buttons_15: 1856216754
+      realisticGames_kenoBlue_frames_buttons_16: -1061051153
+      realisticGames_kenoBlue_frames_buttons_17: 1870934451
+      realisticGames_kenoBlue_frames_buttons_18: -296774887
+      realisticGames_kenoBlue_frames_buttons_19: -309270189
+      realisticGames_kenoBlue_frames_buttons_2: -1388446192
+      realisticGames_kenoBlue_frames_buttons_20: 1539772596
+      realisticGames_kenoBlue_frames_buttons_21: 452583463
+      realisticGames_kenoBlue_frames_buttons_22: -270113250
+      realisticGames_kenoBlue_frames_buttons_23: -2112391003
+      realisticGames_kenoBlue_frames_buttons_24: 496238012
+      realisticGames_kenoBlue_frames_buttons_25: -933312820
+      realisticGames_kenoBlue_frames_buttons_26: -995566049
+      realisticGames_kenoBlue_frames_buttons_27: 2010822192
+      realisticGames_kenoBlue_frames_buttons_28: -742880798
+      realisticGames_kenoBlue_frames_buttons_29: -1542083351
+      realisticGames_kenoBlue_frames_buttons_3: 1208816201
+      realisticGames_kenoBlue_frames_buttons_30: -1012902546
+      realisticGames_kenoBlue_frames_buttons_31: 1038098243
+      realisticGames_kenoBlue_frames_buttons_32: -2017830927
+      realisticGames_kenoBlue_frames_buttons_33: -437834279
+      realisticGames_kenoBlue_frames_buttons_34: -1536412035
+      realisticGames_kenoBlue_frames_buttons_35: -276977354
+      realisticGames_kenoBlue_frames_buttons_36: -1939946932
+      realisticGames_kenoBlue_frames_buttons_37: 542183416
+      realisticGames_kenoBlue_frames_buttons_38: 786316185
+      realisticGames_kenoBlue_frames_buttons_39: 1444963041
+      realisticGames_kenoBlue_frames_buttons_4: 1635070111
+      realisticGames_kenoBlue_frames_buttons_40: 262533890
+      realisticGames_kenoBlue_frames_buttons_41: -1046790974
+      realisticGames_kenoBlue_frames_buttons_42: -961870425
+      realisticGames_kenoBlue_frames_buttons_43: 684463950
+      realisticGames_kenoBlue_frames_buttons_44: 254222979
+      realisticGames_kenoBlue_frames_buttons_45: 1586200054
+      realisticGames_kenoBlue_frames_buttons_46: 1783224583
+      realisticGames_kenoBlue_frames_buttons_47: -1168801142
+      realisticGames_kenoBlue_frames_buttons_48: -743191932
+      realisticGames_kenoBlue_frames_buttons_5: -930339113
+      realisticGames_kenoBlue_frames_buttons_6: 1761959890
+      realisticGames_kenoBlue_frames_buttons_7: 264589293
+      realisticGames_kenoBlue_frames_buttons_8: 2079306268
+      realisticGames_kenoBlue_frames_buttons_9: 76615501
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

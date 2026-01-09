@@ -4,82 +4,53 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public List<AudioClip> AudioClips;
-    public AudioSource BgAudioSource;
-    public AudioSource MainAudioSource;
-    public AudioSource ButtonaudioSource;
-    public AudioSource KenoAudioSource;
-    void Start()
+    [SerializeField] private List<AudioClip> AudioClips;
+    [SerializeField] private AudioSource BgAudioSource;
+    [SerializeField] private AudioSource MainAudioSource;
+    [SerializeField] private AudioSource ButtonaudioSource;
+    [SerializeField] private AudioSource KenoAudioSource;
+    private void Start()
     {
         BgAudioSource.Play();
     }
 
-    void Update()
-    {
-
-    }
-    public void PlayMainAudio(int index)
+    internal void PlayMainAudio(int index)
     {
         if (index < 0 || index >= AudioClips.Count)
         {
             Debug.LogWarning("Audio index out of range: " + index);
             return;
         }
-        MainAudioSource.Stop(); // Stop any currently playing audio
+        MainAudioSource.Stop(); 
         MainAudioSource.clip = AudioClips[index];
         MainAudioSource.Play();
     }
-    public void PlayButtonAudio()
+    internal void PlayButtonAudio()
     {
         if (ButtonaudioSource != null && AudioClips.Count > 0)
         {
-            ButtonaudioSource.clip = AudioClips[0]; // Assuming the first clip is for button sounds
+            ButtonaudioSource.clip = AudioClips[2];
             ButtonaudioSource.Play();
         }
     }
 
-    public void PlayKenoAudio(int index)
+    internal void PlayKenoAudio(int index)
     {
         if (KenoAudioSource != null )
         {
-            KenoAudioSource.clip = AudioClips[index]; // Assuming the second clip is for Keno sounds
+            KenoAudioSource.clip = AudioClips[index];
             KenoAudioSource.Play();
         }
     }
 
-    public void StopMainAudio()
+    internal void StopMainAudio()
     {
         if (MainAudioSource.isPlaying)
         {
             MainAudioSource.Stop();
         }
     }
-
-    // public void ToggleAllSound(bool isOn)
-    // {
-    //     if (isOn)
-    //     {
-    //         if (!BgAudioSource.isPlaying && BgAudioSource.clip != null)
-    //             BgAudioSource.Play();
-
-    //         // Resume main audio if it had a clip
-    //         if (MainAudioSource.clip != null && !MainAudioSource.isPlaying)
-    //             MainAudioSource.Play();
-
-    //         // Resume button audio if needed
-    //         if (ButtonaudioSource.clip != null && !ButtonaudioSource.isPlaying)
-    //             ButtonaudioSource.Play();
-    //     }
-    //     else
-    //     {
-    //         // Stop all sounds
-    //         BgAudioSource.Stop();
-    //         MainAudioSource.Stop();
-    //         ButtonaudioSource.Stop();
-    //     }
-    // }
-    public void ToggleBgSound(bool isOn)
+    internal void ToggleBgSound(bool isOn)
     {
         if (isOn)
         {
@@ -93,7 +64,7 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    public void ToggleMainSound(bool isOn)
+    internal void ToggleMainSound(bool isOn)
     {
         if (isOn)
         {

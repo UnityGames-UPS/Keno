@@ -23,13 +23,13 @@ public class OrientationChange : MonoBehaviour
     ReferenceAspect = CanvasScaler.referenceResolution;
   }
 
-  void SwitchDisplay(string dimensions)
+  private void SwitchDisplay(string dimensions)
   {
     if (rotationRoutine != null) StopCoroutine(rotationRoutine);
     rotationRoutine = StartCoroutine(RotationCoroutine(dimensions));
   }
 
-  IEnumerator RotationCoroutine(string dimensions)
+  private IEnumerator RotationCoroutine(string dimensions)
   {
     yield return new WaitForSecondsRealtime(waitForRotation);
     string[] parts = dimensions.Split(',');

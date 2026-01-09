@@ -11,7 +11,6 @@ using System.Security;
 
 public class SocketIOManager : MonoBehaviour
 {
-  // [SerializeField] private SlotBehaviour slotManager;
   [SerializeField] private UIManager uiManager;
   internal GameData initialData = null;
   internal UiData initUIData = null;
@@ -20,17 +19,15 @@ public class SocketIOManager : MonoBehaviour
   [SerializeField] internal List<string> bonusdata = null;
   internal bool isResultdone = false;
   internal List<List<int>> LineData = null;
-  // protected string nameSpace="game"; //BackendChanges
   protected string nameSpace = "playground"; //BackendChanges
   private Socket gameSocket; //BackendChanges
   private SocketManager manager;
   protected string SocketURI = null;
   // protected string TestSocketURI = "https://game-crm-rtp-backend.onrender.com/";
-  protected string TestSocketURI = "http://localhost:5000/";
+  protected string TestSocketURI = "https://devrealtime.dingdinghouse.com/";
   [SerializeField] internal JSFunctCalls JSManager;
   [SerializeField] private string testToken;
   protected string gameID = "KN-test";
-  // protected string gameID = "";
   internal bool isLoaded = false;
   internal bool SetInit = false;
   private const int maxReconnectionAttempts = 6;
@@ -373,27 +370,17 @@ public class SocketIOManager : MonoBehaviour
           initialData = myData.gameData;
           initUIData = myData.uiData;
           playerdata = myData.player;
-          // bonusdata = myData.message.BonusData;
-          // LineData = myData.message.GameData.Lines;
           PopulateSlotSocket();
           if (!SetInit)
           {
             uiManager.initGame();
             SetInit = true;
           }
-          else
-          {
-            RefreshUI();
-          }
           break;
         }
       case "ResultData":
         {
           //Debug.Log(jsonObject);
-          // myData.message.GameData.FinalResultReel = ConvertListOfListsToStrings(myData.message.GameData.ResultReel);
-          // myData.message.GameData.FinalsymbolsToEmit = TransformAndRemoveRecurring(myData.message.GameData.symbolsToEmit);
-          // resultData = myData.message.GameData;
-          // playerdata = myData.message.PlayerData;
           resultData = myData.payload;
           playerdata = myData.player;
           isResultdone = true;
@@ -414,39 +401,27 @@ public class SocketIOManager : MonoBehaviour
     }
   }
 
-  private void RefreshUI()
-  {
-    // uiManager.InitialiseUIData(initUIData.AbtLogo.link, initUIData.AbtLogo.logoSprite, initUIData.ToULink, initUIData.PopLink, initUIData.paylines);
-  }
+
 
   private void PopulateSlotSocket()
   {
-    // slotManager.shuffleInitialMatrix();
-
-    // slotManager.SetInitialUI();
-
     isLoaded = true;
     RaycastBlocker.SetActive(false);
 #if UNITY_WEBGL && !UNITY_EDITOR
         JSManager.SendCustomMessage("OnEnter");
 #endif
-
   }
 
   internal void AccumulateResult(int currBet, List<int> userPicks)
   {
     isResultdone = false;
     MessageData message = new MessageData();
-    // message.data = new BetData();
-    // message.data.currentBet = currBet;
-    // message.data.picks = userPicks;
-    // message.id = "SPIN";
+
     message.type = "DRAW";
     message.payload = new Data();
     message.payload.betIndex = currBet;
     message.payload.picks = userPicks;
 
-    // Serialize message data to JSON
     string json = JsonUtility.ToJson(message);
     SendDataWithNamespace("request", json);
   }
@@ -460,221 +435,83 @@ public class SocketIOManager : MonoBehaviour
     return stringList;
   }
 
-  private List<string> ConvertListListIntToListString(List<List<int>> listOfLists)
+  [Serializable]
+  public class BetData
   {
-    List<string> resultList = new List<string>();
-
-    foreach (List<int> innerList in listOfLists)
-    {
-      // Convert each integer in the inner list to string
-      List<string> stringList = new List<string>();
-      foreach (int number in innerList)
-      {
-        stringList.Add(number.ToString());
-      }
-
-      // Join the string representation of integers with ","
-      string joinedString = string.Join(",", stringList.ToArray()).Trim();
-      resultList.Add(joinedString);
-    }
-
-    return resultList;
+    public int currentBet;
+    public List<int> picks;
   }
 
-  private List<string> ConvertListOfListsToStrings(List<List<string>> inputList)
+  [Serializable]
+  public class AuthData
   {
-    List<string> outputList = new List<string>();
-
-    foreach (List<string> row in inputList)
-    {
-      string concatenatedString = string.Join(",", row);
-      outputList.Add(concatenatedString);
-    }
-
-    return outputList;
+    public string GameID;
   }
 
-  private List<string> TransformAndRemoveRecurring(List<List<string>> originalList)
+  [Serializable]
+  public class MessageData
   {
-    // Flattened list
-    List<string> flattenedList = new List<string>();
-    foreach (List<string> sublist in originalList)
-    {
-      flattenedList.AddRange(sublist);
-    }
-
-    // Remove recurring elements
-    HashSet<string> uniqueElements = new HashSet<string>(flattenedList);
-
-    // Transformed list
-    List<string> transformedList = new List<string>();
-    foreach (string element in uniqueElements)
-    {
-      transformedList.Add(element.Replace(",", ""));
-    }
-
-    return transformedList;
+    public BetData data;
+    public string id;
+    public string type;
+    public Data payload;
   }
-}
 
-[Serializable]
-public class BetData
-{
-  public int currentBet;
-  public List<int> picks;
-}
-
-[Serializable]
-public class AuthData
-{
-  public string GameID;
-}
-
-[Serializable]
-public class MessageData
-{
-  public BetData data;
-  public string id;
-  public string type;
-  public Data payload;
-}
-
-[Serializable]
-public class Data
-{
-  public double betIndex;
-  public List<int> picks;
-}
-
-[Serializable]
-public class ExitData
-{
-  public string id;
-}
-
-[Serializable]
-public class InitData
-{
-  public AuthData Data;
-  public string id;
-}
-
-[Serializable]
-public class AbtLogo
-{
-  public string logoSprite { get; set; }
-  public string link { get; set; }
-}
-
-[Serializable]
-public class GameData
-{
-  public List<int> drawn;
-  public List<int> picks;
-  public List<int> hits;
-
-
-  public int total { get; set; }
-  public bool isSpecial { get; set; }
-  public int draws { get; set; }
-  public int maximumPicks { get; set; }
-  public List<double> bets { get; set; }
-  public List<List<double>> paytable { get; set; }
-}
-
-[Serializable]
-public class FreeSpins
-{
-  public int count { get; set; }
-  public bool isNewAdded { get; set; }
-}
-
-[Serializable]
-public class Message
-{
-  public GameData GameData { get; set; }
-  //  public uIData UIData { get; set; }
-  public Player PlayerData { get; set; }
-  public List<string> BonusData { get; set; }
-}
-
-[Serializable]
-public class Root
-{
-  public string id { get; set; }
-  public Message message { get; set; }
-
-  public GameData gameData { get; set; }
-  public UiData uiData { get; set; }
-  public Player player { get; set; }
-  public Payload payload { get; set; }
-}
-[Serializable]
-public class Payload
-{
-  public double currenWinning { get; set; }
-  public double totalBet { get; set; }
-  public List<int> hits { get; set; }
-  public List<int> drawn { get; set; }
-}
-
-[Serializable]
-public class UiData
-{
-  public string description { get; set; }
-}
-
-[Serializable]
-public class Paylines
-{
-  public List<Symbol> symbols { get; set; }
-}
-
-[Serializable]
-public class Symbol
-{
-  public int ID { get; set; }
-  public string Name { get; set; }
-  [JsonProperty("multiplier")]
-  public object MultiplierObject { get; set; }
-
-  // This property will hold the properly deserialized list of lists of integers
-  [JsonIgnore]
-  public List<List<int>> Multiplier { get; private set; }
-
-  // Custom deserialization method to handle the conversion
-  [OnDeserialized]
-  internal void OnDeserializedMethod(StreamingContext context)
+  [Serializable]
+  public class Data
   {
-    // Handle the case where multiplier is an object (empty in JSON)
-    if (MultiplierObject is JObject)
-    {
-      Multiplier = new List<List<int>>();
-    }
-    else
-    {
-      // Deserialize normally assuming it's an array of arrays
-      Multiplier = JsonConvert.DeserializeObject<List<List<int>>>(MultiplierObject.ToString());
-    }
+    public double betIndex;
+    public List<int> picks;
   }
-  public object defaultAmount { get; set; }
-  public object symbolsCount { get; set; }
-  public object increaseValue { get; set; }
-  public object description { get; set; }
-  public int freeSpin { get; set; }
-}
-[Serializable]
-public class Player
-{
-  public double balance { get; set; }
-  public double haveWon { get; set; }
-  public double currentWining { get; set; }
-}
-[Serializable]
-public class AuthTokenData
-{
-  public string cookie;
-  public string socketURL;
-  public string nameSpace; //BackendChanges
+
+
+  [Serializable]
+  public class GameData
+  {
+    public int total { get; set; }
+    public bool isSpecial { get; set; }
+    public int draws { get; set; }
+    public int maximumPicks { get; set; }
+    public List<double> bets { get; set; }
+    public List<List<double>> paytable { get; set; }
+  }
+
+  [Serializable]
+  public class Root
+  {
+    public string id { get; set; }
+
+    public GameData gameData { get; set; }
+    public UiData uiData { get; set; }
+    public Player player { get; set; }
+    public Payload payload { get; set; }
+  }
+  [Serializable]
+  public class Payload
+  {
+    public double currenWinning { get; set; }
+    public double totalBet { get; set; }
+    public List<int> hits { get; set; }
+    public List<int> drawn { get; set; }
+  }
+
+  [Serializable]
+  public class UiData
+  {
+    public string description { get; set; }
+  }
+
+  [Serializable]
+  public class Player
+  {
+    public double balance { get; set; }
+  }
+  [Serializable]
+  public class AuthTokenData
+  {
+    public string cookie;
+    public string socketURL;
+    public string nameSpace; //BackendChanges
+  }
 }
 
