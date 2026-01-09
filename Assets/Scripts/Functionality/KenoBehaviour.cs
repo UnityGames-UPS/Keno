@@ -144,6 +144,7 @@ public class KenoBehaviour : MonoBehaviour
     yield return new WaitUntil(() => socketIOManager.isResultdone);
 
     ResultList = socketIOManager.resultData.drawn;
+    yield return new WaitForSeconds(1f);
 
     for (int i = 0; i < ResultList.Count; i++)
     {
