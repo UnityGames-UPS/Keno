@@ -26,6 +26,7 @@ public class KenoBehaviour : MonoBehaviour
   [SerializeField] private RectTransform ThirdCurve;
   [SerializeField] private RectTransform FinalPosition;
   [SerializeField] private float animationTime = 0.5f;
+  [SerializeField] private float ballRotationSpeed = 3f;
 
   [Header("Integers")]
   [SerializeField] internal int selectionCounter = 0;
@@ -223,68 +224,109 @@ public class KenoBehaviour : MonoBehaviour
   {
     ballTexts[ballNumber].text = ResultList[ballNumber].ToString();
     ballTexts[ballNumber].GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, Random.Range(-11f, 11f));
+
     Vector3[] path;
+    Tween rotationTween = null;
+    Tween moveTween = null;
+
     if (ballNumber < 20)
     {
-      path = new Vector3[]
+      float totalDuration = animationTime;
+
+      float rotationSpeed = Random.Range(1.5f, 2.5f);
+      rotationTween = ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, -720),rotationSpeed,RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
+
+      if (ballNumber < 9)
       {
-        FirstCurveMiddle.anchoredPosition,
-        FirstCurve.anchoredPosition
-      };
-      // ballTransforms[ballNumber].DOLocalMove(FirstCurve.anchoredPosition, 0.2f);
-      ballTransforms[ballNumber].DOLocalPath(path, animationTime, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
-      yield return new WaitForSeconds(animationTime - 0.1f);
-      if (ballNumber < 12)
-      {
-        ballTransforms[ballNumber].DOLocalMove(SecondCurve.anchoredPosition, animationTime).WaitForCompletion();
-        yield return new WaitForSeconds(animationTime - 0.13f);
-        if (ballNumber < 9)
+        path = new Vector3[]
         {
-          // ballTransforms[ballNumber].DOLocalMove(ThirdCurve.anchoredPosition, 0.2f);
-          path = new Vector3[]
-          {
+          ballTransforms[ballNumber].anchoredPosition,
+          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+          FirstCurveMiddle.anchoredPosition,
+          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+          FirstCurve.anchoredPosition,
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
           SecondCurve.anchoredPosition,
+          Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.4f),
           MiddleCurve.anchoredPosition,
-          ThirdCurve.anchoredPosition
-          };
-          ballTransforms[ballNumber].DOLocalPath(path, animationTime, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
-          yield return new WaitForSeconds(animationTime - 0.1f);
-
-          ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, animationTime);
-
-        }
-        else
+          Vector3.Lerp(MiddleCurve.anchoredPosition, ThirdCurve.anchoredPosition, 0.6f),
+          ThirdCurve.anchoredPosition,
+          Vector3.Lerp(ThirdCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+          finalPositions[ballNumber].anchoredPosition
+        };
+        totalDuration = animationTime * 3.5f;
+      }
+      else if (ballNumber < 11)
+      {
+        path = new Vector3[]
         {
-          if (ballNumber < 11)
-          {
-            path = new Vector3[]
-            {
-            MiddleCurve.anchoredPosition,
-            finalPositions[ballNumber].anchoredPosition
-            };
-            // ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, 0.2f);
-            ballTransforms[ballNumber].DOLocalPath(path, animationTime - 0.07f, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
-          }
-          else
-          {
-            path = new Vector3[]
-            {
-              finalPositions[ballNumber].anchoredPosition
-            };
-            ballTransforms[ballNumber].DOLocalPath(path, animationTime - 0.1f, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
-          }
-        }
+          ballTransforms[ballNumber].anchoredPosition,
+          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+          FirstCurveMiddle.anchoredPosition,
+          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+          FirstCurve.anchoredPosition,
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
+          SecondCurve.anchoredPosition,
+          Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.5f),
+          MiddleCurve.anchoredPosition,
+          Vector3.Lerp(MiddleCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+          finalPositions[ballNumber].anchoredPosition
+        };
+        totalDuration = animationTime * 2.8f;
+      }
+      else if (ballNumber < 12)
+      {
+        path = new Vector3[]
+        {
+          ballTransforms[ballNumber].anchoredPosition,
+          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+          FirstCurveMiddle.anchoredPosition,
+          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+          FirstCurve.anchoredPosition,
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.4f),
+          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.8f),
+          SecondCurve.anchoredPosition,
+          Vector3.Lerp(SecondCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+          finalPositions[ballNumber].anchoredPosition
+        };
+        totalDuration = animationTime * 2.2f;
       }
       else
       {
-        ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, animationTime);
+        path = new Vector3[]
+        {
+          ballTransforms[ballNumber].anchoredPosition,
+          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+          FirstCurveMiddle.anchoredPosition,
+          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+          FirstCurve.anchoredPosition,
+          Vector3.Lerp(FirstCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+          finalPositions[ballNumber].anchoredPosition
+        };
+        totalDuration = animationTime * 1.8f;
       }
+
+      moveTween = ballTransforms[ballNumber].DOLocalPath(path,totalDuration,PathType.CatmullRom,PathMode.TopDown2D).SetEase(Ease.InOutQuad);
+
+      yield return new WaitForSeconds(totalDuration);
+
+      if (rotationTween != null && rotationTween.IsActive())
+      {
+        rotationTween.Kill();
+
+        float currentZ = ballTransforms[ballNumber].localEulerAngles.z;
+        float targetZ = Mathf.Round(currentZ / 90) * 90;
+
+        ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, targetZ),0.3f,RotateMode.FastBeyond360).SetEase(Ease.OutBack, 1.2f);
+      }
+
+      Vector3 finalPos = ballTransforms[ballNumber].anchoredPosition;
+      ballTransforms[ballNumber].DOPunchAnchorPos(new Vector2(0, -5f), 0.3f, 5, 0.5f);
     }
-    // else
-    // {
-    //   ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, 0.2f);
-    // }
-    yield return new WaitForSeconds(0.1f);
+
+    yield return new WaitForSeconds(0.15f);
   }
 
   internal void ResetButtons()

@@ -79708,6 +79708,7 @@ MonoBehaviour:
   ThirdCurve: {fileID: 708343024}
   FinalPosition: {fileID: 0}
   animationTime: 0.6
+  ballRotationSpeed: 3
   selectionCounter: 0
   ResultCounter: 0
   socketIOManager: {fileID: 1729652015}
@@ -81657,7 +81658,7 @@ MonoBehaviour:
   uiManager: {fileID: 892691301}
   bonusdata: []
   JSManager: {fileID: 2003699288}
-  testToken: 6783f7efb9f3423893847de31acd5423
+  testToken: a89b2b16d3f349a2b5f939a3ebea0c2f
   RaycastBlocker: {fileID: 926643136}
 --- !u!4 &1729652016
 Transform:
