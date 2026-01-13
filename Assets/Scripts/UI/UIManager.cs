@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 using DG.Tweening;
 
 public class UIManager : MonoBehaviour
@@ -228,6 +227,7 @@ public class UIManager : MonoBehaviour
     if (TotalBet_text) TotalBet_text.text = socketManager.initialData.bets[KenoManager.betCounter].ToString();
     // Desc_Text.text = socketManager.initUIData.description;
     KenoManager.MainNumber_Text.text = "00";
+    KenoManager.Balls_Text.text = "";
   }
 
   private void RNDNumberButtons()
@@ -506,14 +506,14 @@ public class UIManager : MonoBehaviour
     {
       Sound_Button.gameObject.SetActive(false);
       CloseSound_Button.gameObject.SetActive(true);
-      audioController.ToggleBgSound(false);
+      audioController.ToggleMainSound(false);
 
     }
     else
     {
       Sound_Button.gameObject.SetActive(true);
       CloseSound_Button.gameObject.SetActive(false);
-      audioController.ToggleBgSound(true);
+      audioController.ToggleMainSound(true);
     }
 
   }
@@ -526,13 +526,13 @@ public class UIManager : MonoBehaviour
     {
       Music_Button.gameObject.SetActive(false);
       CloseMusic_Button.gameObject.SetActive(true);
-      audioController.ToggleMainSound(false);
+      audioController.ToggleBgSound(false);
     }
     else
     {
       Music_Button.gameObject.SetActive(true);
       CloseMusic_Button.gameObject.SetActive(false);
-      audioController.ToggleMainSound(true);
+      audioController.ToggleBgSound(true);
     }
 
   }
@@ -553,8 +553,7 @@ public class UIManager : MonoBehaviour
     IsQuitSelf = true;
     audioController.PlayButtonAudio();
     StartCoroutine(socketManager.CloseSocket());
-    ClosePopup(QuitGame_Object);
+    // ClosePopup(QuitGame_Object);
   }
-
 
 }

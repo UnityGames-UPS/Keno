@@ -54,7 +54,6 @@ public class AudioController : MonoBehaviour
     {
         if (isOn)
         {
-
             BgAudioSource.Play();
             BgAudioSource.mute = false;
         }
@@ -72,15 +71,12 @@ public class AudioController : MonoBehaviour
             MainAudioSource.mute = false;
             ButtonaudioSource.mute = false;
             KenoAudioSource.mute = false;
-
-
         }
         else
         {
             MainAudioSource.mute = true;
             ButtonaudioSource.mute = true;
             KenoAudioSource.mute = true;
-
         }
     }
 }

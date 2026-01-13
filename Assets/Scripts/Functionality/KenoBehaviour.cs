@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEditor.ShaderKeywordFilter;
 
 public class KenoBehaviour : MonoBehaviour
 {
@@ -11,7 +12,20 @@ public class KenoBehaviour : MonoBehaviour
   [SerializeField] private List<int> SelectedList;
   [SerializeField] private List<int> ResultList;
   [SerializeField] private Transform Ball_Transform;
-  [SerializeField] private TMP_Text Balls_Text;
+  [SerializeField] internal TMP_Text Balls_Text;
+
+  [Header("RectTransforms")]
+  [SerializeField] private List<RectTransform> ballTransforms;
+  [SerializeField] private List<TMP_Text> ballTexts;
+  [SerializeField] private List<RectTransform> finalPositions;
+  [SerializeField] private RectTransform initialPosition;
+  [SerializeField] private RectTransform FirstCurve;
+  [SerializeField] private RectTransform FirstCurveMiddle;
+  [SerializeField] private RectTransform SecondCurve;
+  [SerializeField] private RectTransform MiddleCurve;
+  [SerializeField] private RectTransform ThirdCurve;
+  [SerializeField] private RectTransform FinalPosition;
+  [SerializeField] private float animationTime = 0.5f;
 
   [Header("Integers")]
   [SerializeField] internal int selectionCounter = 0;
@@ -34,6 +48,16 @@ public class KenoBehaviour : MonoBehaviour
   internal bool CheckPopup = false;
 
   [SerializeField] AudioController audioController;
+
+  private void Start()
+  {
+    for (int i = 0; i < ballTexts.Count; i++)
+    {
+      // ballTexts[i] = ballTransforms[i].GetComponentInChildren<TMP_Text>();
+      ballTexts[i].text = "";
+    }
+    initialPosition.anchoredPosition = ballTransforms[0].anchoredPosition;
+  }
 
   internal void PickRandoms(int num)
   {
@@ -159,7 +183,8 @@ public class KenoBehaviour : MonoBehaviour
       if (uiManager.turboSpin)
       {
         // Ball_Transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
-        yield return new WaitForSeconds(0.3f);
+        StartCoroutine(BallAnimation(i));
+        yield return new WaitForSeconds(0.4f);
       }
       else
       {
@@ -168,7 +193,9 @@ public class KenoBehaviour : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         RectTransform rt = Ball_Transform as RectTransform;
         rt.DOShakeAnchorPos(0.3f, new Vector2(6f, 0f), 50, 0, false, true);
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(0.5f);
+        StartCoroutine(BallAnimation(i));
+        yield return new WaitForSeconds(0.7f);
       }
 
       KenoButtonScripts[ResultList[i] - 1].ResultColor();
@@ -192,6 +219,74 @@ public class KenoBehaviour : MonoBehaviour
     audioController.StopMainAudio();
   }
 
+  private IEnumerator BallAnimation(int ballNumber)
+  {
+    ballTexts[ballNumber].text = ResultList[ballNumber].ToString();
+    ballTexts[ballNumber].GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, Random.Range(-11f, 11f));
+    Vector3[] path;
+    if (ballNumber < 20)
+    {
+      path = new Vector3[]
+      {
+        FirstCurveMiddle.anchoredPosition,
+        FirstCurve.anchoredPosition
+      };
+      // ballTransforms[ballNumber].DOLocalMove(FirstCurve.anchoredPosition, 0.2f);
+      ballTransforms[ballNumber].DOLocalPath(path, animationTime, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
+      yield return new WaitForSeconds(animationTime - 0.1f);
+      if (ballNumber < 12)
+      {
+        ballTransforms[ballNumber].DOLocalMove(SecondCurve.anchoredPosition, animationTime).WaitForCompletion();
+        yield return new WaitForSeconds(animationTime - 0.13f);
+        if (ballNumber < 9)
+        {
+          // ballTransforms[ballNumber].DOLocalMove(ThirdCurve.anchoredPosition, 0.2f);
+          path = new Vector3[]
+          {
+          SecondCurve.anchoredPosition,
+          MiddleCurve.anchoredPosition,
+          ThirdCurve.anchoredPosition
+          };
+          ballTransforms[ballNumber].DOLocalPath(path, animationTime, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
+          yield return new WaitForSeconds(animationTime - 0.1f);
+
+          ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, animationTime);
+
+        }
+        else
+        {
+          if (ballNumber < 11)
+          {
+            path = new Vector3[]
+            {
+            MiddleCurve.anchoredPosition,
+            finalPositions[ballNumber].anchoredPosition
+            };
+            // ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, 0.2f);
+            ballTransforms[ballNumber].DOLocalPath(path, animationTime - 0.07f, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
+          }
+          else
+          {
+            path = new Vector3[]
+            {
+              finalPositions[ballNumber].anchoredPosition
+            };
+            ballTransforms[ballNumber].DOLocalPath(path, animationTime - 0.1f, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutSine).WaitForCompletion();
+          }
+        }
+      }
+      else
+      {
+        ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, animationTime);
+      }
+    }
+    // else
+    // {
+    //   ballTransforms[ballNumber].DOLocalMove(finalPositions[ballNumber].anchoredPosition, 0.2f);
+    // }
+    yield return new WaitForSeconds(0.1f);
+  }
+
   internal void ResetButtons()
   {
     for (int i = 0; i < KenoButtonScripts.Count; i++)
@@ -209,6 +304,14 @@ public class KenoBehaviour : MonoBehaviour
 
     if (MainNumber_Text) MainNumber_Text.text = "00";
     if (Balls_Text) Balls_Text.text = "";
+    foreach (var b in ballTransforms)
+    {
+      b.anchoredPosition = initialPosition.anchoredPosition;
+    }
+    foreach (var t in ballTexts)
+    {
+      t.text = "";
+    }
   }
 
   internal void CleanPage()

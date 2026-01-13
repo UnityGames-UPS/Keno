@@ -401,8 +401,6 @@ public class SocketIOManager : MonoBehaviour
     }
   }
 
-
-
   private void PopulateSlotSocket()
   {
     isLoaded = true;
