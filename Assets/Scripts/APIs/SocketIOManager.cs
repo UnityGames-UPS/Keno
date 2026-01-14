@@ -16,9 +16,7 @@ public class SocketIOManager : MonoBehaviour
   internal UiData initUIData = null;
   internal Payload resultData = null;
   internal Player playerdata = null;
-  [SerializeField] internal List<string> bonusdata = null;
   internal bool isResultdone = false;
-  internal List<List<int>> LineData = null;
   protected string nameSpace = "playground"; //BackendChanges
   private Socket gameSocket; //BackendChanges
   private SocketManager manager;
@@ -424,15 +422,6 @@ public class SocketIOManager : MonoBehaviour
     SendDataWithNamespace("request", json);
   }
 
-  private List<string> RemoveQuotes(List<string> stringList)
-  {
-    for (int i = 0; i < stringList.Count; i++)
-    {
-      stringList[i] = stringList[i].Replace("\"", ""); // Remove inverted commas
-    }
-    return stringList;
-  }
-
   [Serializable]
   public class BetData
   {
@@ -509,7 +498,7 @@ public class SocketIOManager : MonoBehaviour
   {
     public string cookie;
     public string socketURL;
-    public string nameSpace; //BackendChanges
+    public string nameSpace; 
   }
 }
 

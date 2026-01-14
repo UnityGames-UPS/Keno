@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-using UnityEditor.ShaderKeywordFilter;
 
 public class KenoBehaviour : MonoBehaviour
 {
@@ -24,9 +23,7 @@ public class KenoBehaviour : MonoBehaviour
   [SerializeField] private RectTransform SecondCurve;
   [SerializeField] private RectTransform MiddleCurve;
   [SerializeField] private RectTransform ThirdCurve;
-  [SerializeField] private RectTransform FinalPosition;
   [SerializeField] private float animationTime = 0.5f;
-  [SerializeField] private float ballRotationSpeed = 3f;
 
   [Header("Integers")]
   [SerializeField] internal int selectionCounter = 0;
@@ -234,26 +231,26 @@ public class KenoBehaviour : MonoBehaviour
       float totalDuration = animationTime;
 
       float rotationSpeed = Random.Range(1.5f, 2.5f);
-      rotationTween = ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, -720),rotationSpeed,RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
+      rotationTween = ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, -720), rotationSpeed, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
 
       if (ballNumber < 9)
       {
         path = new Vector3[]
         {
-          ballTransforms[ballNumber].anchoredPosition,
-          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
-          FirstCurveMiddle.anchoredPosition,
-          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
-          FirstCurve.anchoredPosition,
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
-          SecondCurve.anchoredPosition,
-          Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.4f),
-          MiddleCurve.anchoredPosition,
-          Vector3.Lerp(MiddleCurve.anchoredPosition, ThirdCurve.anchoredPosition, 0.6f),
-          ThirdCurve.anchoredPosition,
-          Vector3.Lerp(ThirdCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
-          finalPositions[ballNumber].anchoredPosition
+                ballTransforms[ballNumber].anchoredPosition,
+                Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+                FirstCurveMiddle.anchoredPosition,
+                Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+                FirstCurve.anchoredPosition,
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
+                SecondCurve.anchoredPosition,
+                Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.4f),
+                MiddleCurve.anchoredPosition,
+                Vector3.Lerp(MiddleCurve.anchoredPosition, ThirdCurve.anchoredPosition, 0.6f),
+                ThirdCurve.anchoredPosition,
+                Vector3.Lerp(ThirdCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+                finalPositions[ballNumber].anchoredPosition
         };
         totalDuration = animationTime * 3.5f;
       }
@@ -261,18 +258,18 @@ public class KenoBehaviour : MonoBehaviour
       {
         path = new Vector3[]
         {
-          ballTransforms[ballNumber].anchoredPosition,
-          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
-          FirstCurveMiddle.anchoredPosition,
-          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
-          FirstCurve.anchoredPosition,
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
-          SecondCurve.anchoredPosition,
-          Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.5f),
-          MiddleCurve.anchoredPosition,
-          Vector3.Lerp(MiddleCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
-          finalPositions[ballNumber].anchoredPosition
+                ballTransforms[ballNumber].anchoredPosition,
+                Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+                FirstCurveMiddle.anchoredPosition,
+                Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+                FirstCurve.anchoredPosition,
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.3f),
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.7f),
+                SecondCurve.anchoredPosition,
+                Vector3.Lerp(SecondCurve.anchoredPosition, MiddleCurve.anchoredPosition, 0.5f),
+                MiddleCurve.anchoredPosition,
+                Vector3.Lerp(MiddleCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+                finalPositions[ballNumber].anchoredPosition
         };
         totalDuration = animationTime * 2.8f;
       }
@@ -280,16 +277,16 @@ public class KenoBehaviour : MonoBehaviour
       {
         path = new Vector3[]
         {
-          ballTransforms[ballNumber].anchoredPosition,
-          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
-          FirstCurveMiddle.anchoredPosition,
-          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
-          FirstCurve.anchoredPosition,
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.4f),
-          Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.8f),
-          SecondCurve.anchoredPosition,
-          Vector3.Lerp(SecondCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
-          finalPositions[ballNumber].anchoredPosition
+                ballTransforms[ballNumber].anchoredPosition,
+                Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+                FirstCurveMiddle.anchoredPosition,
+                Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+                FirstCurve.anchoredPosition,
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.4f),
+                Vector3.Lerp(FirstCurve.anchoredPosition, SecondCurve.anchoredPosition, 0.8f),
+                SecondCurve.anchoredPosition,
+                Vector3.Lerp(SecondCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+                finalPositions[ballNumber].anchoredPosition
         };
         totalDuration = animationTime * 2.2f;
       }
@@ -297,33 +294,46 @@ public class KenoBehaviour : MonoBehaviour
       {
         path = new Vector3[]
         {
-          ballTransforms[ballNumber].anchoredPosition,
-          Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
-          FirstCurveMiddle.anchoredPosition,
-          Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
-          FirstCurve.anchoredPosition,
-          Vector3.Lerp(FirstCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
-          finalPositions[ballNumber].anchoredPosition
+                ballTransforms[ballNumber].anchoredPosition,
+                Vector3.Lerp(ballTransforms[ballNumber].anchoredPosition, FirstCurveMiddle.anchoredPosition, 0.5f),
+                FirstCurveMiddle.anchoredPosition,
+                Vector3.Lerp(FirstCurveMiddle.anchoredPosition, FirstCurve.anchoredPosition, 0.5f),
+                FirstCurve.anchoredPosition,
+                Vector3.Lerp(FirstCurve.anchoredPosition, finalPositions[ballNumber].anchoredPosition, 0.5f),
+                finalPositions[ballNumber].anchoredPosition
         };
         totalDuration = animationTime * 1.8f;
       }
 
-      moveTween = ballTransforms[ballNumber].DOLocalPath(path,totalDuration,PathType.CatmullRom,PathMode.TopDown2D).SetEase(Ease.InOutQuad);
+      moveTween = ballTransforms[ballNumber].DOLocalPath(path, totalDuration, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.InOutQuad);
 
-      yield return new WaitForSeconds(totalDuration);
-
+      if (ballNumber < 9)
+      {
+        yield return new WaitForSeconds(1.07f);
+        rotationTween.Kill();
+        ballTransforms[ballNumber].GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 7);
+        rotationTween = ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, 720), rotationSpeed, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
+        yield return new WaitForSeconds(totalDuration - 1.07f);
+      }
+      else
+      {
+        yield return new WaitForSeconds(totalDuration);
+      }
       if (rotationTween != null && rotationTween.IsActive())
       {
         rotationTween.Kill();
 
         float currentZ = ballTransforms[ballNumber].localEulerAngles.z;
-        float targetZ = Mathf.Round(currentZ / 90) * 90;
+        
+        float rotations = Mathf.Round(currentZ / 320f);
+        float targetZ = rotations * 320f;
 
-        ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, targetZ),0.3f,RotateMode.FastBeyond360).SetEase(Ease.OutBack, 1.2f);
+        ballTransforms[ballNumber].DOLocalRotate(new Vector3(0, 0, targetZ), 0.7f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic);
+
       }
 
       Vector3 finalPos = ballTransforms[ballNumber].anchoredPosition;
-      ballTransforms[ballNumber].DOPunchAnchorPos(new Vector2(0, -5f), 0.3f, 5, 0.5f);
+      ballTransforms[ballNumber].DOPunchAnchorPos(new Vector2(-5f, 0f), 0.3f, 5, 0.5f);
     }
 
     yield return new WaitForSeconds(0.15f);
