@@ -373,8 +373,18 @@ public class KenoBehaviour : MonoBehaviour
       KenoButtonScripts[i].ResetButton();
     }
     if (MainNumber_Text) MainNumber_Text.text = "00";
+    if (Balls_Text) Balls_Text.text = "";
+    foreach (var b in ballTransforms)
+    {
+      b.anchoredPosition = initialPosition.anchoredPosition;
+    }
+    foreach (var t in ballTexts)
+    {
+      t.text = "";
+    }
     uiManager.PayoutHighlight.SetActive(false);
     uiManager.ClearBlackImage.SetActive(true);
+    uiManager.Clear_Button.interactable = false;
     SelectedList.Clear();
     SelectedList.TrimExcess();
     ResultCounter = 0;

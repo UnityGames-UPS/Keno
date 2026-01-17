@@ -220,6 +220,7 @@ public class UIManager : MonoBehaviour
   internal void initGame()
   {
     UpdateSelectedText();
+    Clear_Button.interactable = false;
     ClearBlackImage.SetActive(true);
     PayoutHighlight.SetActive(false);
     Clear_Button.interactable = false;
@@ -486,6 +487,7 @@ public class UIManager : MonoBehaviour
       if (KenoManager.selectionCounter > 0)
       {
         ClearBlackImage.SetActive(false);
+        Clear_Button.interactable = true;
       }
       BetUpBlackImage.SetActive(false);
       BetDownBlackImage.SetActive(false);
@@ -494,6 +496,7 @@ public class UIManager : MonoBehaviour
     {
       RNDPanel.SetActive(true);
       ClearBlackImage.SetActive(true);
+      Clear_Button.interactable = false;
       BetUpBlackImage.SetActive(true);
       BetDownBlackImage.SetActive(true);
     }
