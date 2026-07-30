@@ -5,9 +5,6 @@ using System;
 using Newtonsoft.Json;
 using Best.SocketIO;
 using Best.SocketIO.Events;
-using Newtonsoft.Json.Linq;
-using System.Runtime.Serialization;
-using System.Security;
 
 public class SocketIOManager : MonoBehaviour
 {
@@ -90,6 +87,7 @@ public class SocketIOManager : MonoBehaviour
 
 
 #if UNITY_WEBGL && !UNITY_EDITOR
+    JSManager.RegisterAuthTokenListener(gameObject.name); // listen for host's TokenReceived before asking
     JSManager.SendCustomMessage("authToken");
     StartCoroutine(WaitForAuthToken(options));
 #else
@@ -207,7 +205,7 @@ public class SocketIOManager : MonoBehaviour
   } //Back2 end
   private void OnPongReceived(string data) //Back2 Start
   {
-    // Debug.Log("✅ Received pong from server.");
+    Debug.Log("✅ Received pong from server.");
     waitingForPong = false;
     missedPongs = 0;
     lastPongTime = Time.time;
