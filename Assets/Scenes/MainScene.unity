@@ -40454,7 +40454,7 @@ MonoBehaviour:
   KenoManager: {fileID: 1698002703}
   socketManager: {fileID: 1729652015}
   audioController: {fileID: 1981140670}
-  jsFunctCalls: {fileID: 0}
+  jsFunctCalls: {fileID: 2003699288}
   MainPopup_Object: {fileID: 135614920}
   MaxPopup_Object: {fileID: 176974240}
   WinPopup_Object: {fileID: 794837390}
