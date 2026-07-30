@@ -40454,6 +40454,7 @@ MonoBehaviour:
   KenoManager: {fileID: 1698002703}
   socketManager: {fileID: 1729652015}
   audioController: {fileID: 1981140670}
+  jsFunctCalls: {fileID: 0}
   MainPopup_Object: {fileID: 135614920}
   MaxPopup_Object: {fileID: 176974240}
   WinPopup_Object: {fileID: 794837390}
@@ -54383,9 +54384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIWrapper: {fileID: 812931472}
   CanvasScaler: {fileID: 51930702}
-  MatchWidth: 1
-  MatchHeight: 1
-  PortraitMatchWandH: 0.5
   transitionDuration: 0.2
   waitForRotation: 0.2
 --- !u!1 &1173858328
@@ -81309,7 +81307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 892691301}
   JSManager: {fileID: 2003699288}
-  testToken: beab7ebc53a547cc9e8eaf148a3d988a
+  testToken: 23a8d4ea62e94fefbdb9f97408c90c41
   RaycastBlocker: {fileID: 926643136}
 --- !u!4 &1729652016
 Transform:

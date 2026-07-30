@@ -9,9 +9,39 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioSource MainAudioSource;
     [SerializeField] private AudioSource ButtonaudioSource;
     [SerializeField] private AudioSource KenoAudioSource;
+
+    private readonly Dictionary<AudioSource, bool> preFocusMuteState = new Dictionary<AudioSource, bool>();
+    private bool isForceMuted = false;
+    private List<AudioSource> AllSources => new List<AudioSource> { BgAudioSource, MainAudioSource, ButtonaudioSource, KenoAudioSource };
+
     private void Start()
     {
         BgAudioSource.Play();
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        SetMuteAll(!focus);
+    }
+
+    internal void SetMuteAll(bool forceMute)
+    {
+        if (forceMute == isForceMuted) return;
+        isForceMuted = forceMute;
+
+        foreach (var source in AllSources)
+        {
+            if (source == null) continue;
+            if (forceMute)
+            {
+                preFocusMuteState[source] = source.mute;
+                source.mute = true;
+            }
+            else
+            {
+                source.mute = preFocusMuteState.TryGetValue(source, out bool prevMuted) ? prevMuted : source.mute;
+            }
+        }
     }
 
     internal void PlayMainAudio(int index)
@@ -52,6 +82,7 @@ public class AudioController : MonoBehaviour
     }
     internal void ToggleBgSound(bool isOn)
     {
+        isForceMuted = false;
         if (isOn)
         {
             BgAudioSource.Play();
@@ -65,6 +96,7 @@ public class AudioController : MonoBehaviour
 
     internal void ToggleMainSound(bool isOn)
     {
+        isForceMuted = false;
         if (isOn)
         {
 

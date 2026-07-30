@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private KenoBehaviour KenoManager;
   [SerializeField] private SocketIOManager socketManager;
   [SerializeField] private AudioController audioController;
+  [SerializeField] private JSFunctCalls jsFunctCalls;
 
   [Header("Popups")]
   [SerializeField] private GameObject MainPopup_Object;
@@ -86,6 +87,20 @@ public class UIManager : MonoBehaviour
   internal bool isReset = false;
   internal bool turboSpin = false;
   internal bool IsQuitSelf = false;
+
+  private void Awake()
+  {
+    if (jsFunctCalls != null)
+      jsFunctCalls.RegisterVisibilityListener(gameObject.name);
+  }
+
+  public void OnFocusChanged(string value)
+  {
+    bool focused = value == "1";
+    Debug.Log("UNITY FOCUS CHANGED: " + value + " (focused: " + focused + ")");
+    audioController?.SetMuteAll(!focused);
+    socketManager?.HandleFocusChange(focused);
+  }
 
   private void Start()
   {
@@ -305,6 +320,13 @@ public class UIManager : MonoBehaviour
   {
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
     if (LowBalance_Object) LowBalance_Object.SetActive(true);
+  }
+
+  internal void UpdateBalanceDisplay(double newBalance)
+  {
+    BalanceAmt_Text.text = newBalance.ToString("F2");
+    if (newBalance < socketManager.initialData.bets[KenoManager.betCounter])
+      LowBalancePopupEnable();
   }
 
   internal void UpdateSelectedText()
