@@ -878,7 +878,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 120}
+  m_AnchoredPosition: {x: 0, y: 155}
   m_SizeDelta: {x: 736.21, y: 112.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &17329531
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Connection Error '
+  m_text: DISCONNECTED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
   m_sharedMaterial: {fileID: 2775572280753514822, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
@@ -928,10 +928,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78.15
-  m_fontSizeBase: 36
+  m_fontSize: 74
+  m_fontSizeBase: 74
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 103.85
   m_fontStyle: 1
@@ -6368,13 +6368,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1723574129}
-  - {fileID: 1508881683}
   - {fileID: 176974241}
   - {fileID: 794837391}
+  - {fileID: 988040461}
+  - {fileID: 1508881683}
+  - {fileID: 1542371916}
   - {fileID: 1727179060}
   - {fileID: 42846455}
-  - {fileID: 1542371916}
-  - {fileID: 988040461}
   m_Father: {fileID: 812931472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -16547,7 +16547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.638e-12, y: 16}
+  m_AnchoredPosition: {x: -3.638e-12, y: 20}
   m_SizeDelta: {x: 588.79, y: 83.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &383698826
@@ -16570,7 +16570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Unable to connect to the server '
+  m_text: Please restart the game.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
   m_sharedMaterial: {fileID: 2775572280753514822, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
@@ -16597,10 +16597,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.95
-  m_fontSizeBase: 36
+  m_fontSize: 56
+  m_fontSizeBase: 56
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 103.85
   m_fontStyle: 0
@@ -31442,8 +31442,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 96}
-  m_SizeDelta: {x: 799.92, y: 116.96}
+  m_AnchoredPosition: {x: 0, y: 114}
+  m_SizeDelta: {x: 969.15, y: 116.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &709590501
 MonoBehaviour:
@@ -31465,7 +31465,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reconnecting...
+  m_text: CONNECTION LOST
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
   m_sharedMaterial: {fileID: 2775572280753514822, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
@@ -31492,10 +31492,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 85.85
-  m_fontSizeBase: 36
+  m_fontSize: 74
+  m_fontSizeBase: 74
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 103.85
   m_fontStyle: 1
@@ -55307,7 +55307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Trying to Reconnect '
+  m_text: Trying to Reconnect....
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
   m_sharedMaterial: {fileID: 2775572280753514822, guid: 94a17aa424a23495488357f1b414caa5, type: 2}
@@ -55334,10 +55334,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.5
-  m_fontSizeBase: 36
+  m_fontSize: 56
+  m_fontSizeBase: 56
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 103.85
   m_fontStyle: 0
