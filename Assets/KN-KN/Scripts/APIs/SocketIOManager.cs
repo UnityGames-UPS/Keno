@@ -13,21 +13,21 @@ public class SocketIOManager : MonoBehaviour
 {
   [SerializeField] private UIManager uiManager;
   internal GameData initialData = null;
-  internal UiData initUIData = null;
+  private UiData initUIData = null;
   internal Payload resultData = null;
   internal Player playerdata = null;
   internal bool isResultdone = false;
-  protected string nameSpace = "playground"; //BackendChanges
+  private string nameSpace = "playground"; //BackendChanges
   private Socket gameSocket; //BackendChanges
   private SocketManager manager;
-  protected string SocketURI = null;
+  private string SocketURI = null;
   // protected string TestSocketURI = "https://game-crm-rtp-backend.onrender.com/";
-  protected string TestSocketURI = "https://devrealtime.dingdinghouse.com/";
-  [SerializeField] internal JSFunctCalls JSManager;
+  private string TestSocketURI = "https://devrealtime.dingdinghouse.com/";
+  [SerializeField] private JSFunctCalls JSManager;
   [SerializeField] private string testToken;
-  protected string gameID = "KN-test";
-  internal bool isLoaded = false;
-  internal bool SetInit = false;
+  private string gameID = "KN-test";
+  private bool isLoaded = false;
+  private bool SetInit = false;
   private const int maxReconnectionAttempts = 6;
   private readonly TimeSpan reconnectionDelay = TimeSpan.FromSeconds(10);
   private bool isConnected = false; //Back2 Start
@@ -430,7 +430,7 @@ public class SocketIOManager : MonoBehaviour
 #endif
   } //Back2 end
 
-  internal void ReactNativeCallOnFailedToConnect() //BackendChanges
+  private void ReactNativeCallOnFailedToConnect() //BackendChanges
   {
 #if UNITY_WEBGL && !UNITY_EDITOR
     JSManager.SendCustomMessage("onExit");

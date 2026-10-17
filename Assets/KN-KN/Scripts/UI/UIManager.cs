@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private TMP_Text PayoutInitialText;
 
   [Header("Lists")]
-  [SerializeField] internal List<RectTransform> HighlightTransform;
+  [SerializeField] private List<RectTransform> HighlightTransform;
   [SerializeField] private List<TMP_Text> Payout_Text;
   [SerializeField] private List<TMP_Text> Hits_Text;
   [SerializeField] private List<Button> RND_NumberButtons;
@@ -316,7 +316,7 @@ public class UIManager : MonoBehaviour
     if (MaxPopup_Object) MaxPopup_Object.SetActive(false);
   }
 
-  internal void LowBalancePopupEnable()
+  private void LowBalancePopupEnable()
   {
     if (MainPopup_Object) MainPopup_Object.SetActive(true);
     if (LowBalance_Object) LowBalance_Object.SetActive(true);
@@ -348,7 +348,7 @@ public class UIManager : MonoBehaviour
     }
   }
 
-  internal void WinningsTextUpdate(double amount)
+  private void WinningsTextUpdate(double amount)
   {
     if (Win_Text) Win_Text.text = amount.ToString("F2");
   }

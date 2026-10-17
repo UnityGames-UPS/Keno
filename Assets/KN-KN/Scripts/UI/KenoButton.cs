@@ -25,7 +25,7 @@ public class KenoButton : MonoBehaviour
   [SerializeField]
   private KenoBehaviour KenoManager;
 
-  internal bool isActive = false;
+  private bool isActive = false;
 
   [SerializeField] private UIManager uIManager;
   [SerializeField] private AudioController audioController;

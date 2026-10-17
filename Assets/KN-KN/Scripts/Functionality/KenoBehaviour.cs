@@ -42,7 +42,7 @@ public class KenoBehaviour : MonoBehaviour
 
   internal int betCounter = 1;
 
-  internal bool IsKenoComplete = false;
+  private bool IsKenoComplete = false;
   internal bool CheckPopup = false;
 
   [SerializeField] AudioController audioController;
